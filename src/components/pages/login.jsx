@@ -87,7 +87,7 @@ export const Login = () => {
 
             <div className="form">
               <div class="input-container ic1">
-                <input id="name" class="input" type="text" placeholder=" " />
+                <input id="name" class="log-input" type="text" placeholder=" " />
                 <div class="cut"></div>
                 <label for="name" class="form-placeholder">Name</label>
               </div>
