@@ -6,3 +6,11 @@
     text-align: center;
     padding-top: 70px;
 }
+.task-container{
+    height: 600px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #ffffff;
+    padding: 40px 40px;
+}

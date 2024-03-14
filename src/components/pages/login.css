@@ -45,8 +45,32 @@
     display:flex;
     justify-content: center;
   }
+  .google-signin-btn {
+    background-color: #4285F4;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    font-weight: bold;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; 
+  }
   
+  .google-icon {
+    width: 20px; 
+    height: auto;
+  }
+  * Add hover effect for better user interaction */
+  .google-signin-btn:hover {
+    background-color: #357ae8;
+  }
   
+  .google-signin-btn {
+    margin-top: 20px;
+  } 
 
 .form-options {
     display: flex;

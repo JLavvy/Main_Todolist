@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './login.css';
-import { GoogleLogin } from '@react-oauth/google';
+import googleLogo from "/GoogleLogo.png";
+import { auth, provider } from "./firebase";
+import { signInWithPopup } from "firebase/auth"
+import { TodoList } from './TodoList';
+
+
 
 export const Login = () => {
   const [justifyActive, setJustifyActive] = useState('login-tab');
+  const [value, setValue] = useState('')
 
   const handleJustifyClick = (value) => {
     if (value === justifyActive) {
@@ -11,6 +17,20 @@ export const Login = () => {
     }
     setJustifyActive(value);
   };
+
+  const handleClick = () => {
+    signInWithPopup(auth, provider).then((data) => {
+      setValue(data.user.email)
+      localStorage.setItem("email".data.user.email)
+    })
+
+    useEffect(() => {
+      setValue(localStorage.getItem('email'))
+
+    })
+  }
+
+
 
   return (
     <div className="log-container">
@@ -31,18 +51,19 @@ export const Login = () => {
       </div>
 
 
+
       <div className="tabs-content">
         {justifyActive === 'login-tab' && (
           <div className="tab-pane">
+
             <div className="google-button">
-              <GoogleLogin
-                onSuccess={(credentialResponse) => {
-                  console.log(credentialResponse);
-                }}
-                onError={() => {
-                  console.log('Login Failed');
-                }}
-              />
+              {value ? <TodoList /> :
+                <button className="google-signin-btn" onClick={handleClick}>
+                  <img src={googleLogo} alt="Google Icon" className="google-icon" />
+                  Sign In with Google</button>
+
+              }
+
             </div>
             <h5 className="tab-text">or: </h5>
 
@@ -72,16 +93,15 @@ export const Login = () => {
           <div className="tab-pane">
 
             <div className="google-button">
-              <GoogleLogin
-                onSuccess={(credentialResponse) => {
-                  console.log(credentialResponse);
-                }}
-                onError={() => {
-                  console.log('Login Failed');
-                }}
-              />
+              {value ? <TodoList /> :
+                <button className="google-signin-btn" onClick={handleClick}>
+                  <img src={googleLogo} alt="Google Icon" className="google-icon" />
+                  Sign In with Google</button>
+
+              }
+
             </div>
-            
+
             <h5 className="tab-text">or: </h5>
 
 
@@ -102,9 +122,7 @@ export const Login = () => {
                 <input id="email" class="log-input" type="email" placeholder=" " />
                 <div class="cut cut-short"></div>
                 <label for="email" class="form-placeholder">Email</label>
-              </div>
-
-              <div class="input-container ic2">
+              </div><div class="input-container ic2">
                 <input id="password" class="log-input" type="password" placeholder=" " />
                 <div class="cut cut-short1"></div>
                 <label for="password" class="form-placeholder">Password</label>

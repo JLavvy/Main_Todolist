@@ -1,0 +1,191 @@
+.log-container {  
+  max-width: 30%;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 30px;
+  padding: 3rem;
+  
+  
+}
+
+.tabs {
+  display: flex;
+  column-gap: 3rem;
+  margin-bottom: 16px;
+}
+
+.tab-item {
+  border: 1px ;
+  background-color: lightgrey;
+  padding: 15px 10px;
+  cursor: pointer;
+  color: black;
+  width: 75%;
+  margin: 0 auto;
+}
+
+.tab-item.active {
+  border-bottom: 3px solid blue;
+  background-color: lightblue;
+}
+
+.tab-pane {
+  text-align: center;
+  background-color: transparent;
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.google-button {
+  margin-top: 20px;
+  display:flex;
+  justify-content: center;
+}
+.google-signin-btn {
+  background-color: #4285F4;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+  font-weight: bold;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; 
+}
+
+.google-icon {
+  width: 20px; 
+  height: auto;
+}
+* Add hover effect for better user interaction */
+.google-signin-btn:hover {
+  background-color: #357ae8;
+}
+
+.google-signin-btn {
+  margin-top: 20px;
+} 
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.form-group input {
+  display: block;
+  width: 90%;
+  padding: 20px;
+  margin: 10px 0;
+  border-radius: 20px;
+  background-color: transparent;
+}
+
+.input-container {
+  height: 50px;
+  position: relative;
+  width: 100%;
+}
+
+.ic1 {
+  margin-top: 40px;
+}
+
+.ic2 {
+  margin-top: 30px;
+}
+
+.log-input {
+  background-color: lightblue;
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  color: black;
+  font-size: 18px;
+  height: 100%;
+  outline: 0;
+  padding: 4px 20px 0;
+  width: 100%;
+}
+
+.cut {
+  background-color: transparent;
+  border-radius: 10px;
+  height: 20px;
+  left: 30px;
+  position: absolute;
+  top: -20px;
+  transform: translateY(0);
+  transition: transform 200ms;
+  width: 76px;
+}
+
+.cut-short {
+  width: 50px;
+}
+
+.cut-short1 {
+  width: 70px;
+}
+
+.log-input:focus ~ .cut,
+.log-input:not(:placeholder-shown) ~ .cut {
+  transform: translateY(8px);
+}
+
+.form-placeholder {
+  color: #65657b;
+  font-family: sans-serif;
+  left: 20px;
+  line-height: 14px;
+  pointer-events: none;
+  position: absolute;
+  transform-origin: 0 50%;
+  transition: transform 200ms, color 200ms;
+  top: 20px;
+}
+
+.log-input:focus ~ .form-placeholder,
+.log-input:not(:placeholder-shown) ~ .form-placeholder {
+  transform: translateY(-40px) translateX(10px) scale(0.75);
+}
+
+.log-input:not(:placeholder-shown) ~ .form-placeholder {
+  color: black;
+}
+
+.log-input:focus ~ .form-placeholder {
+  color: rgb(16, 16, 135);
+}
+
+.submit-btn {
+  width: 80%;
+  padding: 10px;
+  background-color: blue;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+
+@media screen and (max-width: 768px) {
+  .log-container {
+      max-width: 90%; 
+  }
+
+  .tabs {
+      flex-direction: column; 
+      column-gap: 0; 
+  }
+
+  .tab-item {
+      width: 100%; 
+      margin-bottom: 8px;
+  }
+}

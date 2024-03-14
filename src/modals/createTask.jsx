@@ -3,7 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 export const CreateTaskModal = ({ modal, toggle,save }) => {
     const[taskName, setTaskName]=useState('');
-    const [descrption,  SetDescription]=useState('');
+    const [description,  SetDescription]=useState('');
 
     const handleChange = (e)=>{
 
@@ -19,7 +19,7 @@ export const CreateTaskModal = ({ modal, toggle,save }) => {
     const handleSave=() =>{
         let taskObj= {}
         taskObj["Name"]= taskName
-        taskObj["Description"]= descrption
+        taskObj["Description"]= description
         save(taskObj)
 
     }
@@ -37,7 +37,7 @@ export const CreateTaskModal = ({ modal, toggle,save }) => {
 
                     <div className="task-form">
                         <label>Description</label>
-                        <textarea rows="5" className='form-control' value={descrption} onChange={handleChange} name='description'></textarea>
+                        <textarea rows="5" className='form-control' value={description} onChange={handleChange} name='description'></textarea>
                     </div>
 
                 </form>

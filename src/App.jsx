@@ -1,6 +1,5 @@
 import React from 'react'
 import './App.css'
-
 import { Login } from './components/pages/login';
 import { TodoList } from './components/pages/TodoList';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -13,8 +12,7 @@ function App() {
         <BrowserRouter>
         <Routes> 
           <Route index element={ <Login />} />
-          <Route path="/login" element={ <Login />} />
-          <Route path="/dashboard" element={ <TodoList />} />
+          <Route path="/TodoList" element={ <TodoList />} />
         </Routes>
 
         </BrowserRouter>
