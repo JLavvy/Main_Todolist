@@ -6,9 +6,7 @@
     justify-content: center;
     border: 1px solid black;
     border-radius: 30px;
-    padding: 3rem;
-    
-    
+    padding: 3rem; 
 }
 
 .tabs {
@@ -175,17 +173,55 @@
 
 
 @media screen and (max-width: 768px) {
-    .log-container {
-        max-width: 90%; 
-    }
+  .log-container {
+      max-width: 90%;
+      padding: 2rem;
+  }
 
-    .tabs {
-        flex-direction: column; 
-        column-gap: 0; 
-    }
+  .tabs {
+      flex-direction: column;
+      column-gap: 0;
+  }
 
-    .tab-item {
-        width: 100%; 
-        margin-bottom: 8px;
-    }
+  .tab-item {
+      width: 100%;
+      margin-bottom: 8px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .log-container {
+      padding: 1rem;
+  }
+
+  .tab-item {
+      font-size: 14px;
+      padding: 10px;
+  }
+
+  .tab-pane {
+      font-size: 14px;
+  }
+
+  .google-signin-btn {
+      font-size: 14px;
+      padding: 8px 12px;
+  }
+
+  .google-icon {
+      width: 16px;
+  }
+
+  .log-input {
+      font-size: 14px;
+      padding: 2px 16px 0;
+  }
+
+  .form-placeholder {
+      font-size: 12px;
+  }
+
+  .submit-btn {
+      font-size: 14px;
+  }
 }

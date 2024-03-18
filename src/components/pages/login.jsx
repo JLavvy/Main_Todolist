@@ -4,12 +4,14 @@ import googleLogo from "/GoogleLogo.png";
 import { auth, provider } from "./firebase";
 import { signInWithPopup } from "firebase/auth"
 import { TodoList } from './TodoList';
+import { useNavigate } from 'react-router-dom';
 
 
 
 export const Login = () => {
   const [justifyActive, setJustifyActive] = useState('login-tab');
   const [value, setValue] = useState('')
+  const navigate =useNavigate();
 
   const handleJustifyClick = (value) => {
     if (value === justifyActive) {
@@ -19,10 +21,12 @@ export const Login = () => {
   };
 
   const handleClick = () => {
-    signInWithPopup(auth, provider).then((data) => {
-      setValue(data.user.email)
-      localStorage.setItem("email".data.user.email)
-    })
+    signInWithPopup(auth, provider)
+      .then((data) => {
+        setValue(data.user.email);
+        localStorage.setItem("email", data.user.email); // Fix the localStorage.setItem line
+        navigate('/TodoList');
+      })
 
     useEffect(() => {
       setValue(localStorage.getItem('email'))
@@ -57,12 +61,12 @@ export const Login = () => {
           <div className="tab-pane">
 
             <div className="google-button">
-              {value ? <TodoList /> :
+              
                 <button className="google-signin-btn" onClick={handleClick}>
                   <img src={googleLogo} alt="Google Icon" className="google-icon" />
                   Sign In with Google</button>
 
-              }
+              
 
             </div>
             <h5 className="tab-text">or: </h5>

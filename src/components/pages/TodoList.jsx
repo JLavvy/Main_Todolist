@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { CreateTaskModal} from '../../modals/createTask';
 import { Card } from './Card';
+import { Navbar } from './navbar';
 import './TodoList.css';
+
 
 
 export const TodoList = () => {
@@ -52,7 +54,7 @@ export const TodoList = () => {
 
   return (
     <>
- 
+       <Navbar />
       <div className='header-dash '>
       
         <h3>Todo List</h3>
