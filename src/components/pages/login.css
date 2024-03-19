@@ -1,13 +1,18 @@
-.log-container {  
-    max-width: 30%;
-    margin: 40px auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border: 1px solid black;
-    border-radius: 30px;
-    padding: 3rem; 
+.log-container {
+  max-width: 30%;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: none;
+  border-radius: 10px;
+  padding: 3rem;
+  background-color: #fff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
 }
+
+
 
 .tabs {
     display: flex;
@@ -61,7 +66,8 @@
     width: 20px; 
     height: auto;
   }
-  * Add hover effect for better user interaction */
+
+  
   .google-signin-btn:hover {
     background-color: #357ae8;
   }
