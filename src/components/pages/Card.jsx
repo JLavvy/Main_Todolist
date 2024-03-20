@@ -3,9 +3,10 @@ import { EditTaskModal } from '../../modals/EditTask';
 
 import './Card.css';
 
-export const Card = ({ taskObj, index, deleteTask , updateListArray}) => {
-    const [modal, setModal] =useState(false);
-    
+export const Card = ({ taskObj, index, deleteTask, updateListArray }) => {
+    const [modal, setModal] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
+
     const colors = [
         {
             primaryColor: "#8B000",
@@ -48,11 +49,11 @@ export const Card = ({ taskObj, index, deleteTask , updateListArray}) => {
         },
 
     ]
-    const toggle =()=>{
+    const toggle = () => {
         setModal(!modal);
     }
- 
-    const updateTask =(obj) =>{
+
+    const updateTask = (obj) => {
 
         updateListArray(obj, index)
 
@@ -66,18 +67,24 @@ export const Card = ({ taskObj, index, deleteTask , updateListArray}) => {
         <div className="card-wrapper ">
             <div className="card-top" style={{ backgroundColor: colors[index % 8].primaryColor }}></div>
             <div className="task-holder">
-                <span className="card-header" style={{ backgroundColor: colors[index % 8].secondaryColor }}>
+                <span className="card-header" style={{ backgroundColor: colors[index % 8].secondaryColor, textDecoration: isChecked ? 'line-through' : 'none' }}>
                     {taskObj.Name}
+                    <input type="checkbox" checked={isChecked} onChange={() => setIsChecked(!isChecked)} style={{ marginLeft: '10px' }} />
                 </span>
 
-                <p className='desc'>{taskObj.Description}</p>
+                <p className='desc' style={{ textDecoration: isChecked ? 'line-through' : 'none' }}>{taskObj.Description}</p>
 
                 <div className="card-bottom">
-                    <i className="fas fa-edit" style={{ color: "black", marginRight: "10px", cursor: "pointer" }} onClick={()=> setModal(true)}></i>
-                    <i className="fas fa-trash" style={{ color: "red", cursor: "pointer" }} onClick={handleDelete}></i>
+                    <div className="card-bottom-left">
+                        <p className="created-at">Created at: {taskObj.createdAt}</p>
+                    </div>
+                    <div className="card-bottom-right">
+                        <i className="fas fa-edit" style={{ color: "black", marginRight: "10px", cursor: "pointer" }} onClick={() => setModal(true)}></i>
+                        <i className="fas fa-trash" style={{ color: "red", cursor: "pointer" }} onClick={handleDelete}></i>
+                    </div>
                 </div>
-            </div> 
-            <EditTaskModal modal={modal} toggle={toggle} updateTask={updateTask} taskObj={taskObj}/>
+            </div>
+            <EditTaskModal modal={modal} toggle={toggle} updateTask={updateTask} taskObj={taskObj} />
         </div>
     )
 }

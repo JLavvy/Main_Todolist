@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import dayjs from 'dayjs';
 
 export const CreateTaskModal = ({ modal, toggle,save }) => {
     const[taskName, setTaskName]=useState('');
@@ -20,6 +21,7 @@ export const CreateTaskModal = ({ modal, toggle,save }) => {
         let taskObj= {}
         taskObj["Name"]= taskName
         taskObj["Description"]= description
+        taskObj["createdAt"] = dayjs().format('YYYY-MM-DD ')
         save(taskObj)
 
     }

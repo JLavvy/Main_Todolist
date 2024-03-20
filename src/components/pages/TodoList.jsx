@@ -10,8 +10,7 @@ import './TodoList.css';
 export const TodoList = () => {
   const [modal, setModal] = useState(false);
   const [taskList, setTaskList]= useState([])
-  
-
+ 
 
   useEffect(() => {
     let arr =localStorage.getItem("taskList")
@@ -20,11 +19,12 @@ export const TodoList = () => {
       let obj= JSON.parse(arr)
       setTaskList(obj)
     }
-  }, [])
+  }, []);
+
 
   const updateListArray = (obj, index) =>{
     let tempList =taskList
-    tempList[index] =obj
+    tempList[index] = { ...obj, isChecked: obj.isChecked }; 
     localStorage.setItem("taskList", JSON.stringify(tempList));
     setTaskList(tempList)
     window.location.reload()
@@ -60,10 +60,13 @@ export const TodoList = () => {
         <h3>Todo List</h3>
         <button className='btn btn-primary mt-2' onClick={toggle}>Create Task</button>
       </div>
+      
       <div className="task-container">
+        
         {taskList.map((obj, index) => <Card taskObj= {obj} index={index} deleteTask = {deleteTask} updateListArray={updateListArray} />)}
         
       </div>
+
       <CreateTaskModal toggle={toggle} modal={modal} save ={saveTask} />
     </>
   );
