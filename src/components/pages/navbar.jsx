@@ -1,18 +1,17 @@
-import React from 'react'
+import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './navbar.css';
 
 export const Navbar = () => {
-
     const navigate = useNavigate();
 
-    const handleLogout = () => {
-        
-        localStorage.removeItem('token'); 
+    const handleLogout = useCallback(() => {
+      
+        localStorage.removeItem('token');
 
-        
         navigate('/');
-    };
+    }, [navigate]);
+
     return (
         <nav>
             <div className="navbar">
@@ -24,5 +23,5 @@ export const Navbar = () => {
                 </div>
             </div>
         </nav>
-    )
-}
+    );
+};
