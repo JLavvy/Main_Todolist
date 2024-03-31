@@ -3,9 +3,13 @@ import { EditTaskModal } from '../../modals/EditTask';
 
 import './Card.css';
 
-export const Card = ({ taskObj, index, deleteTask, updateListArray, isAuthenticated, userId }) => {
+export const Card = ({ taskObj, index, deleteTask, updateListArray}) => {
     const [modal, setModal] = useState(false);
-    const [isChecked, setIsChecked] = useState(false);
+    const [isChecked, setIsChecked] = useState(() => {
+        const savedState = localStorage.getItem(`checkedState_${taskObj.id}`);
+        return savedState ? JSON.parse(savedState) : taskObj.isChecked || false;
+    });
+    
 
     const colors = [
         { primaryColor: "#8B0000", secondaryColor: "#FF6347" },
@@ -33,11 +37,13 @@ export const Card = ({ taskObj, index, deleteTask, updateListArray, isAuthentica
     const handleCheckboxChange = (event) => {
         const newIsChecked = event.target.checked;
         setIsChecked(newIsChecked);
-
+        updateListArray({ ...taskObj, isChecked: newIsChecked }, index);
     };
- useEffect(() => {
+    
+    useEffect(() => {
         localStorage.setItem(`checkedState_${taskObj.id}`, JSON.stringify(isChecked));
-      }, [isChecked, taskObj.id]);
+    }, [isChecked, taskObj.id]);
+    
 
     return (
         <div className="card-wrapper">

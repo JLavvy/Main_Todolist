@@ -12,7 +12,15 @@ export const TodoList = () => {
   useEffect(() => {
     const storedTaskList = localStorage.getItem("taskList");
     if (storedTaskList) {
-      setTaskList(JSON.parse(storedTaskList));
+      const parsedTaskList = JSON.parse(storedTaskList);
+      const updatedTaskList = parsedTaskList.map((task) => {
+        const storedCheckedState = localStorage.getItem(`checkedState_${task.id}`);
+        if (storedCheckedState) {
+          return { ...task, isChecked: JSON.parse(storedCheckedState) };
+        }
+        return task;
+      });
+      setTaskList(updatedTaskList);
     }
   }, []);
 
@@ -22,6 +30,9 @@ export const TodoList = () => {
     });
     setTaskList(updatedTaskList);
     localStorage.setItem("taskList", JSON.stringify(updatedTaskList));
+    updatedTaskList.forEach((task) => {
+      localStorage.setItem(`checkedState_${task.id}`, JSON.stringify(task.isChecked));
+    });
   };
 
   const deleteTask = (index) => {
@@ -38,6 +49,7 @@ export const TodoList = () => {
     const updatedTaskList = [...taskList, taskObj];
     setTaskList(updatedTaskList);
     localStorage.setItem("taskList", JSON.stringify(updatedTaskList));
+    localStorage.setItem(`checkedState_${taskObj.id}`, JSON.stringify(taskObj.isChecked));
     setModal(false);
   };
 
