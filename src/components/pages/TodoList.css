@@ -14,6 +14,21 @@
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    background-color: #ffffff;
+    background-color: #903d3d;
     padding: 40px 40px;
 }
+.card {
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 8px; /* Border radius */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow */
+    padding: 100px; /* Padding */
+    background-color: #fff; /* Background color */
+  }
+  .completed-task {
+    text-decoration: line-through;
+  }
+  
+  .completed-task-label {
+    text-decoration: line-through;
+  }
+  
