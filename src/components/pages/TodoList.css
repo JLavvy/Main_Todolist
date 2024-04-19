@@ -1,34 +1,69 @@
-.header-dash{
-    height: 250px;
-    width: 100%;
-    background-color: lightblue;
-    margin: 0 auto;
-    text-align: center;
-    padding-top: 70px;
-}
-.header-topic{
-    margin-top: 30px;
-}
 .task-container{
-    height: 600px;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    background-color: #903d3d;
-    padding: 40px 40px;
+    background-color: #f5ebeb;
+    justify-content: center;
+    margin-top: 40px;
 }
-.card {
-    border: 1px solid #ccc; /* Border color */
-    border-radius: 8px; /* Border radius */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow */
-    padding: 100px; /* Padding */
-    background-color: #fff; /* Background color */
-  }
-  .completed-task {
-    text-decoration: line-through;
+.task-container > div {
+  min-height: 10vh;
+  max-width: 1000px;
+  padding: 10px;
+}
+
+
+.task-container header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.task-container h1 {
+  font-size: 2rem;
+}
+
+.task-container input[type="text"] {
+  width: 100%;
+  padding: 10px;
+}
+
+.task-container .form-check {
+  background-color: #F3F4F6;
+  padding: 10px;
+  margin-bottom: 1px;
+}
+
+.task-container .form-check label {
+  text-decoration: none;
+}
+
+.task-container .form-check input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.task-container .form-check input[type="text"] {
+  width: calc(100% - 40px); 
+}
+
+.task-container .btn-group {
+  gap: 5px;
+}
+
+.task-container .text-end {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .task-container > div {
+    padding: 5px;
   }
   
-  .completed-task-label {
-    text-decoration: line-through;
+  .task-container h1 {
+    font-size: 1.5rem;
   }
   
+  .task-container .form-check input[type="text"] {
+    width: calc(100% - 30px);
+  }
+}

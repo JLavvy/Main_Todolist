@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import { RiAddLine } from 'react-icons/ri';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar } from './navbar';
 import './TodoList.css';
 
 export const TodoList = () => {
+  const LOCAL_STORAGE_KEY = "task-list";
 
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(() => {
+    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
+  });
 
   const [newTask, setNewTask] = useState('');
   const [editTaskIndex, setEditTaskIndex] = useState(null);
   const [editedTask, setEditedTask] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [originalTasks, setOriginalTasks] = useState([]);
 
   useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    setOriginalTasks(tasks);
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(tasks));
   }, [tasks]);
-
-  useEffect(() => {
-    const storedTasks = JSON.parse(localStorage.getItem('tasks'));
-    if (storedTasks) {
-      setTasks(storedTasks);
-    }
-  }, []);
-
 
   const handleCreateTask = () => {
     if (newTask.trim() !== '') {
-      setTasks([...tasks, newTask.trim()]);
+      const updatedTasks = [...tasks, { text: newTask.trim(), completed: false }];
+      setTasks(updatedTasks);
+      setOriginalTasks(updatedTasks); // Update originalTasks when new task is added
       setNewTask('');
       setErrorMessage('');
     } else {
@@ -35,7 +35,16 @@ export const TodoList = () => {
   };
 
   const handleCompletedTasks = () => {
-    // Logic to handle completed tasks
+    const completedTasks = tasks.filter(task => task.completed);
+    if (tasks.length === completedTasks.length) {
+      setTasks([...originalTasks]);
+    } else {
+      setTasks(completedTasks);
+    }
+  };
+
+  const handleAllTasks = () => {
+    setTasks([...originalTasks]);
   };
 
   const handleInputChange = (e) => {
@@ -44,13 +53,13 @@ export const TodoList = () => {
 
   const handleEditTask = (index) => {
     setEditTaskIndex(index);
-    setEditedTask(tasks[index]);
+    setEditedTask(tasks[index].text);
   };
 
   const handleSaveEditedTask = () => {
     if (editedTask.trim() !== '') {
       const updatedTasks = [...tasks];
-      updatedTasks[editTaskIndex] = editedTask.trim();
+      updatedTasks[editTaskIndex].text = editedTask.trim();
       setTasks(updatedTasks);
       setEditTaskIndex(null);
     } else {
@@ -67,67 +76,35 @@ export const TodoList = () => {
     const updatedTasks = [...tasks];
     updatedTasks.splice(index, 1);
     setTasks(updatedTasks);
+    setOriginalTasks(updatedTasks); 
   };
 
   const handleToggleCompletion = (index) => {
     const updatedTasks = [...tasks];
     updatedTasks[index].completed = !updatedTasks[index].completed;
     setTasks(updatedTasks);
+    setOriginalTasks(updatedTasks); 
   };
 
+  // Calculate the number of completed tasks
+  const completedTasksCount = tasks.filter(task => task.completed).length;
 
-  ;
   return (
     <>
       <Navbar />
-      <div className='header-dash'>
-        <h3 className='header-topic'>Todo List</h3>
-      </div>
-      <div className="task-container d-flex justify-content-center ">
-        <div className="min-vh-10 text-black d-flex flex-column align-items-center justify-content-center p-4">
-          <div className="card">
+
+      <div className="task-container d-flex justify-content-center w-100">
+      <div className="min-vh-10 text-black  flex-column align-items-center justify-content-center p-5 w-100" style={{ maxWidth: '900px' }}>
+          <div className=" overflow-auto max-h-100"> 
             <header className="d-flex justify-content-between w-100 mb-4">
-              <h1 className="text-4xl font-bold">📝todo </h1>
+              <h1 className="text-4xl font-bold">📝 My Todo</h1>
               <div className="d-flex gap-1">
                 <button
                   className="btn btn-primary d-inline-flex align-items-center"
                   onClick={handleCreateTask}
                 >
                   <span>Create</span>
-                  <svg
-                    className="ms-2 w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M12 4v16m8-8H4"
-                    />
-                  </svg>
-                </button>
-                <button
-                  className="btn btn-secondary d-inline-flex align-items-center"
-                  onClick={handleCompletedTasks}
-                >
-                  <span>Completed</span>
-                  <svg
-                    className="ms-2 w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
+                  <RiAddLine className="m-0.5" />
                 </button>
               </div>
             </header>
@@ -167,77 +144,72 @@ export const TodoList = () => {
                       </label>
                     </div>
                     {editTaskIndex === index ? (
-                      <>
-                        <input
-                          type="text"
-                          className="form-control"
-                          value={editedTask}
-                          onChange={(e) => setEditedTask(e.target.value)}
-                        />
-                        <div>
-                          <button className="btn btn-sm btn-primary me-2" onClick={handleSaveEditedTask}>
-                            Save
-                          </button>
-                          <button className="btn btn-sm btn-secondary" onClick={handleCancelEdit}>
-                            Cancel
-                          </button>
-                        </div>
-                      </>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={editedTask}
+                        onChange={(e) => setEditedTask(e.target.value)}
+                      />
                     ) : (
-                      <>
-                        <label className="form-check-label" htmlFor={`task-${index}`}>
-                          {task}
-                        </label>
-                        <div>
-                          <div>
-                            <button className="btn btn-sm btn-primary me-2" onClick={() => handleEditTask(index)}>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="icon icon-tabler icon-tabler-pencil"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                strokeWidth="1.5"
-                                stroke="currentColor"
-                                fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              >
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M4 17l-1 4 4-1 9.414-9.414a2 2 0 0 0 -.414-2.586l-2-2a2 2 0 0 0 -2.586-.414z" />
-                                <circle cx="12" cy="12" r="2" />
-                              </svg>
-                            </button>
-                            <button className="btn btn-sm btn-danger" onClick={() => handleDeleteTask(index)}>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="icon icon-tabler icon-tabler-trash"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                strokeWidth="1.5"
-                                stroke="currentColor"
-                                fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              >
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <line x1="4" y1="7" x2="20" y2="7" />
-                                <line x1="10" y1="11" x2="10" y2="17" />
-                                <line x1="14" y1="11" x2="14" y2="17" />
-                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                              </svg>
-                            </button>
-                          </div>
-
-                        </div>
-                      </>
+                      <div className="d-flex align-items-center gap-2">
+                        <button className="btn btn-sm btn-primary" onClick={() => handleEditTask(index)}>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="icon icon-tabler icon-tabler-pencil"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M4 17l-1 4 4-1 9.414-9.414a2 2 0 0 0 -.414-2.586l-2-2a2 2 0 0 0 -2.586-.414z" />
+                            <circle cx="12" cy="12" r="2" />
+                          </svg>
+                        </button>
+                        <button className="btn btn-sm btn-danger" onClick={() => handleDeleteTask(index)}>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="icon icon-tabler icon-tabler-trash"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <line x1="4" y1="7" x2="20" y2="7" />
+                            <line x1="10" y1="11" x2="10" y2="17" />
+                            <line x1="14" y1="11" x2="14" y2="17" />
+                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                          </svg>
+                        </button>
+                      </div>
                     )}
                   </div>
+                  {editTaskIndex === index && (
+                    <div className="d-flex justify-content-end mt-2">
+                      <button className="btn btn-sm btn-primary me-2" onClick={handleSaveEditedTask}>
+                        Save
+                      </button>
+                      <button className="btn btn-sm btn-secondary" onClick={handleCancelEdit}>
+                        Cancel
+                      </button>
+                    </div>
+                  )}
                 </div>
-
               ))}
+              {/* Statement showing completed tasks count */}
+              <div className="text-end mb-4">
+                <i>Completed {completedTasksCount} out of {tasks.length} tasks</i>
+              </div>
             </div>
           </div>
         </div>
