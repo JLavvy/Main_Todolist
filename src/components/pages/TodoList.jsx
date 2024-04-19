@@ -76,14 +76,14 @@ export const TodoList = () => {
     const updatedTasks = [...tasks];
     updatedTasks.splice(index, 1);
     setTasks(updatedTasks);
-    setOriginalTasks(updatedTasks); 
+    setOriginalTasks(updatedTasks);
   };
 
   const handleToggleCompletion = (index) => {
     const updatedTasks = [...tasks];
     updatedTasks[index].completed = !updatedTasks[index].completed;
     setTasks(updatedTasks);
-    setOriginalTasks(updatedTasks); 
+    setOriginalTasks(updatedTasks);
   };
 
   // Calculate the number of completed tasks
@@ -94,18 +94,19 @@ export const TodoList = () => {
       <Navbar />
 
       <div className="task-container d-flex justify-content-center w-100">
-      <div className="min-vh-10 text-black  flex-column align-items-center justify-content-center p-5 w-100" style={{ maxWidth: '900px' }}>
-          <div className=" overflow-auto max-h-100"> 
+        <div className="min-vh-10 text-black  flex-column align-items-center justify-content-center p-5 w-100" style={{ maxWidth: '900px' }}>
+          <div className=" overflow-auto max-h-100">
             <header className="d-flex justify-content-between w-100 mb-4">
               <h1 className="text-4xl font-bold">📝 My Todo</h1>
               <div className="d-flex gap-1">
                 <button
-                  className="btn btn-primary d-inline-flex align-items-center"
+                  className="btn btn-custom d-inline-flex align-items-center"
                   onClick={handleCreateTask}
                 >
                   <span>Create</span>
                   <RiAddLine className="m-0.5" />
                 </button>
+
               </div>
             </header>
             <div className="d-flex flex-column justify-content-center w-100 max-w-5xl">

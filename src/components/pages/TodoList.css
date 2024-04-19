@@ -1,8 +1,9 @@
 .task-container{
+  height: 100%;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    background-color: #f5ebeb;
+    background-color: #F1EEDC;
     justify-content: center;
     margin-top: 40px;
 }
@@ -52,6 +53,17 @@
 
 .task-container .text-end {
   margin-bottom: 20px;
+}
+
+.btn-custom {
+  background-color: #ACE2E1;
+  border-color: #ACE2E1;
+  color: black; /* Change text color to white for better contrast */
+}
+
+.btn-custom:hover {
+  background-color: #7DC7BF; /* Change color on hover if needed */
+  border-color: #7DC7BF;
 }
 
 @media (max-width: 768px) {
